@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: "configserver"
+  profiles:
+  #    active: native
+    active: git
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/Trangbn/ezmicroservice-config.git"
+          default-label: master
+          timeout: 5
+          force-pull: true
+          clone-on-start: true
+#        native:
+#          search-locations: "classpath:/config"
+#          search-locations: "file:///Users//ezmicroservice//config"
+
+encrypt:
+  key: "1283AF77A89636EDB399DD311C2E4"
+
+server:
+  port: 8071
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
