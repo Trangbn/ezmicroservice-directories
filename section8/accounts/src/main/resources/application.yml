@@ -53,9 +53,12 @@ eureka:
     registerWithEureka: true
     serviceUrl:
       defaultZone: http://localhost:8070/eureka/
+# eliminate all warning sign in eureka server ( should be removed just for test)
+#  server:
+#    enableSelfPreservation: false
 
 info:
   app:
     name: "accounts"
-    description: "EZ microservice"
+    description: "EZ microservice application"
     version: "1.0.0"
