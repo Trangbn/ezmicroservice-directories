@@ -7,13 +7,12 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-
 @Data
 @Schema(
-        name = "Customer",
-        description = "Schema to hold Customer and Account information"
+        name = "CustomerDetails",
+        description = "Schema to hold Customer, Cards, Accounts and Loans information"
 )
-public class CustomerDto {
+public class CustomerDetailsDto {
 
     @NotEmpty(message = "Name is required")
     @Size(min = 5, max = 30, message = "The length should be between 5-30")
@@ -30,4 +29,14 @@ public class CustomerDto {
             description = "Account details of the Customer"
     )
     private AccountsDto accountsDto;
+
+    @Schema(
+            description = "Loans details of the Customer"
+    )
+    private LoansDto loansDto;
+
+    @Schema(
+            description = "Cards details of the Customer"
+    )
+    private CardsDto cardsDto;
 }
