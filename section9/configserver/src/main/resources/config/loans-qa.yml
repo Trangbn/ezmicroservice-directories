@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+loans:
+  message: "Loans detail fetched from qa APIs"
+  contactDetails:
+    name: "Robert Developer"
+    email: "trangbn580@gmail.com"
+  onCallSupport:
+    - (555)123-355
+    - (555)123-333

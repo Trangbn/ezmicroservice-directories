@@ -1,0 +1,11 @@
+build:
+  version: "1.0"
+
+cards:
+  message: "Get card's information on prod APIs"
+  contactDetails:
+    name: "Robert cards developer"
+    email: "trangbn580@gmail,com"
+  onCallSupport:
+    - (555)123-123
+    - (555)123-255
