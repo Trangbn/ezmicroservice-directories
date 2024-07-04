@@ -51,3 +51,8 @@ info:
     name: "loans"
     description: "Loans service for microservice application"
     version: "1.0.0"
+logging:
+  level:
+    com:
+      ezmicroservice:
+        loans: DEBUG

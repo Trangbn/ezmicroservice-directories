@@ -62,3 +62,9 @@ info:
     name: "accounts"
     description: "EZ microservice application"
     version: "1.0.0"
+
+logging:
+  level:
+    com:
+      ezmicroservice:
+        accounts: DEBUG

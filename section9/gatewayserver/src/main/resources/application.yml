@@ -26,3 +26,9 @@ info:
     name: "gatewayserver"
     description: "Ezmicroservice Gateway Server Application"
     version: "1.0.0"
+
+logging:
+  level:
+    com:
+      ezmicroservice:
+        gatewayserver: DEBUG
