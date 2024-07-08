@@ -25,7 +25,7 @@ public class GatewayserverApplication {
 						.uri("lb://ACCOUNTS"))
 				.route(p -> p
 						.path("/ezmicroservice/loans/**")
-						.filters(f -> f.rewritePath("/exmicroservice/loans/(?<segment>.*)", "/${segment}")
+						.filters(f -> f.rewritePath("/ezmicroservice/loans/(?<segment>.*)", "/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 						.uri("lb://LOANS"))
 				.route(p -> p
