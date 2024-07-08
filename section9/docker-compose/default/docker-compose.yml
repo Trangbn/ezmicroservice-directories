@@ -1,6 +1,6 @@
 services:
   configserver:
-    image: "trangbn/configserver:v8"
+    image: "trangbn/configserver:v9"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -19,7 +19,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "trangbn/eurekaserver:v8"
+    image: "trangbn/eurekaserver:v9"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -43,10 +43,16 @@ services:
       SPRING_APPLICATION_NAME: "eurekaserver"
 
   accounts:
-    image: "trangbn/accounts:v8"
+    image: "trangbn/accounts:v9"
     container_name: accounts-ms
     ports:
       - "8080:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     depends_on:
       configserver:
         condition: service_healthy
@@ -59,10 +65,16 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "trangbn/loans:v8"
+    image: "trangbn/loans:v9"
     container_name: loans-ms
     ports:
       - "8090:8090"
+    healthcheck:
+      test: "curl --fail --silent localhost:8090/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     depends_on:
       configserver:
         condition: service_healthy
@@ -75,10 +87,16 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "trangbn/cards:v8"
+    image: "trangbn/cards:v9"
     container_name: cards-ms
     ports:
       - "9080:9080"
+    healthcheck:
+      test: "curl --fail --silent localhost:9080/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     depends_on:
       configserver:
         condition: service_healthy
@@ -86,6 +104,24 @@ services:
         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "cards"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+  gatewayserver:
+    image: "trangbn/gatewayserver:v9"
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      accounts:
+        condition: service_healthy
+      loans:
+        condition: service_healthy
+      cards:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
     extends:
       file: common-config.yml
       service: microservice-eureka-config

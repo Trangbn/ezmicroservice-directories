@@ -90,7 +90,7 @@
 				<version>3.4.1</version>
 				<configuration>
 					<to>
-						<image>trangbn/${project.artifactId}:v8</image>
+						<image>trangbn/${project.artifactId}:v9</image>
 					</to>
 				</configuration>
 			</plugin>
