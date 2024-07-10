@@ -28,8 +28,7 @@ spring:
   cloud:
     openfeign:
       circuitbreaker:
-        alphanumeric-ids:
-          enabled: true
+        enabled: true
 
 
 build:
