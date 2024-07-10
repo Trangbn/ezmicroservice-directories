@@ -1,0 +1,11 @@
+build:
+  version: "3.0"
+
+loans:
+  message: "Loans detail fetched from local APIs"
+  contactDetails:
+    name: "Robert Developer"
+    email: "trangbn580@gmail.com"
+  onCallSupport:
+    - (555)123-345
+    - (555)123-346
