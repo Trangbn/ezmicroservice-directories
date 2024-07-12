@@ -61,6 +61,5 @@ info:
     version: "1.0.0"
 logging:
   level:
-    com:
-      ezmicroservice:
-        loans: DEBUG
+    ezmicroservice:
+      loans: DEBUG
