@@ -5,12 +5,15 @@ import com.ezmicroservice.accounts.dto.AccountsContactInfoDto;
 import com.ezmicroservice.accounts.dto.CustomerDto;
 import com.ezmicroservice.accounts.dto.ResponseDto;
 import com.ezmicroservice.accounts.service.IAccountsService;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -29,8 +32,8 @@ import org.springframework.web.bind.annotation.*;
 )
 public class AccountsController {
 
+    private final Logger logger = LoggerFactory.getLogger(AccountsController.class);
     private final IAccountsService accountsService;
-
 
     /**
      * This is for read environment properties not for properties in application.yml
@@ -129,11 +132,19 @@ public class AccountsController {
             responseCode = "200",
             description = "HTTP status OK"
     )
+
+    @Retry(name = "getBuildInfo" , fallbackMethod = "getBuildInfoFallback")
     @GetMapping("/build-info")
     public ResponseEntity<String> getBuildInfo() {
-        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+        logger.debug("getBuildInfo() method Invoked");
+        throw new RuntimeException();
+//        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
     }
 
+    public ResponseEntity<String> getBuildInfoFallback(Throwable throwable) {
+        logger.debug("getBuildInfoFallback() method Invoked");
+        return ResponseEntity.status(HttpStatus.OK).body("0.9");
+    }
 
     @Operation(
             summary = "Get java version",
