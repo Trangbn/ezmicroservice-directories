@@ -103,3 +103,10 @@ resilience4j.retry:
         - java.lang.NullPointerException
       retryExceptions:
         - java.util.concurrent.TimeoutException
+
+resilience4j.ratelimiter:
+  configs:
+    default:
+      timeoutDuration: 1000    # Time for wait for next quota refreshing
+      limitRefreshPeriod: 5000   # Time for refresh the quota
+      limitForPeriod: 1  # Quota limit is 1 request
