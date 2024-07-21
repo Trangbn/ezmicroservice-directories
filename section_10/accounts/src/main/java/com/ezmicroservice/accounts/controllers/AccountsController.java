@@ -157,8 +157,7 @@ public class AccountsController {
     @RateLimiter(name = "getJavaVersion", fallbackMethod = "getJavaVersionFallback")
     @GetMapping("/java-version")
     public ResponseEntity<String> getJavaVersion() {
-        return ResponseEntity.status(HttpStatus.OK).body(env.getProperty("MAVEN_HOME"));
-//        return ResponseEntity.status(HttpStatus.OK).body(env.getProperty("JAVA_HOME"));
+        return ResponseEntity.status(HttpStatus.OK).body(env.getProperty("JAVA_HOME"));
     }
 
     public ResponseEntity<String> getJavaVersionFallback(Throwable throwable) {
