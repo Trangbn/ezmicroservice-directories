@@ -1,0 +1,11 @@
+build:
+  version: "1.0"
+
+accounts:
+  message: "Welcome to Ezmicroservice related to Product APIs"
+  contactDetails:
+    name: "Robert - Product owner"
+    email: "productowner@gmail.com"
+  onCallSupport:
+    - (777)555-1234
+    - (777)555-1235
