@@ -1,5 +1,16 @@
 services:
-
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.2
+    container_name: keycloak
+    ports:
+      - "7080:8080"
+    environment:
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+    command: "start-dev"
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
   read:
     image: grafana/loki:3.0.0
     command: "-config.file=/etc/loki/config.yaml -target=read"
@@ -204,7 +215,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "trangbn/configserver:v11"
+    image: "trangbn/configserver:v12"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -223,7 +234,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "trangbn/eurekaserver:v11"
+    image: "trangbn/eurekaserver:v12"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -247,7 +258,7 @@ services:
       SPRING_APPLICATION_NAME: "eurekaserver"
 
   accounts:
-    image: "trangbn/accounts:v11"
+    image: "trangbn/accounts:v12"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -269,7 +280,7 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "trangbn/loans:v11"
+    image: "trangbn/loans:v12"
     container_name: loans-ms
     ports:
       - "8090:8090"
@@ -291,7 +302,7 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "trangbn/cards:v11"
+    image: "trangbn/cards:v12"
     container_name: cards-ms
     ports:
       - "9080:9080"
@@ -313,7 +324,7 @@ services:
       service: microservice-eureka-config
 
   gatewayserver:
-    image: "trangbn/gatewayserver:v11"
+    image: "trangbn/gatewayserver:v12"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
