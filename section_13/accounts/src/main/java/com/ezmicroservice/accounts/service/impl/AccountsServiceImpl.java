@@ -2,6 +2,7 @@ package com.ezmicroservice.accounts.service.impl;
 
 import com.ezmicroservice.accounts.constants.AccountsConstants;
 import com.ezmicroservice.accounts.dto.AccountsDto;
+import com.ezmicroservice.accounts.dto.AccountsMsgDto;
 import com.ezmicroservice.accounts.dto.CustomerDto;
 import com.ezmicroservice.accounts.entity.Accounts;
 import com.ezmicroservice.accounts.entity.Customer;
@@ -13,6 +14,9 @@ import com.ezmicroservice.accounts.repository.AccountsRepository;
 import com.ezmicroservice.accounts.repository.CustomerRepository;
 import com.ezmicroservice.accounts.service.IAccountsService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,8 +27,10 @@ import java.util.Random;
 @AllArgsConstructor
 public class AccountsServiceImpl implements IAccountsService {
 
+    private static final Logger logger = LoggerFactory.getLogger(AccountsServiceImpl.class);
     private AccountsRepository accountsRepository;
     private CustomerRepository customerRepository;
+    private final StreamBridge streamBridge;
 
     @Override
     public void createAccount(CustomerDto customerDto) {
@@ -34,7 +40,16 @@ public class AccountsServiceImpl implements IAccountsService {
             throw new CustomerAlreadyExistsException("Customer already registered with given mobile number " + customerDto.getMobileNumber());
         }
         Customer savedCustomer = customerRepository.save(customer);
-        accountsRepository.save(createNewAccount(savedCustomer));
+        Accounts savedAccount = accountsRepository.save(createNewAccount(savedCustomer));
+        sendCommunication(savedAccount, savedCustomer);
+    }
+
+    private void sendCommunication(Accounts accounts, Customer customer){
+
+        AccountsMsgDto accountsMsgDto = new AccountsMsgDto(accounts.getAccountNumber(), customer.getName(), customer.getEmail(), customer.getMobileNumber());
+        logger.info("Sending communication request for the details: {}", accountsMsgDto);
+        var result = streamBridge.send("sendCommunication-out-0", accountsMsgDto);
+        logger.info("Is the Communication request successfully triggered ? : {}", result);
     }
 
     /**

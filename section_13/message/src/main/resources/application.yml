@@ -9,7 +9,7 @@ spring:
       definition: email|sms
     stream:
       bindings:
-        emailsms-in-O:
+        emailsms-in-0:
           destination: send-communication
           group: ${spring.application.name}
   rabbitmq:
