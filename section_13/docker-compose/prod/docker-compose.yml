@@ -1,4 +1,20 @@
 services:
+  rabbit:
+    image: rabbitmq:3.13-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.3
     container_name: keycloak
@@ -215,7 +231,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "trangbn/configserver:v12"
+    image: "trangbn/configserver:v13"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -234,7 +250,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "trangbn/eurekaserver:v12"
+    image: "trangbn/eurekaserver:v13"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -320,7 +336,7 @@ services:
       service: microservice-eureka-config
 
   gatewayserver:
-    image: "trangbn/gatewayserver:v12"
+    image: "trangbn/gatewayserver:v13"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"

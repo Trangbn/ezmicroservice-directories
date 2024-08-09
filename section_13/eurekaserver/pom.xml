@@ -84,7 +84,7 @@
 				<version>3.4.1</version>
 				<configuration>
 					<to>
-						<image>trangbn/${project.artifactId}:v12</image>
+						<image>trangbn/${project.artifactId}:v13</image>
 					</to>
 				</configuration>
 			</plugin>
