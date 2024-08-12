@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+loans:
+  message: "Loans detail fetched from prod APIs"
+  contactDetails:
+    name: "Robert Developer"
+    email: "trangbn580@gmail.com"
+  onCallSupport:
+    - (555)123-359
+    - (555)123-359
