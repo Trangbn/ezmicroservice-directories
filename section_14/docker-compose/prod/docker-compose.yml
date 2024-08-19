@@ -294,11 +294,8 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
-      rabbit:
-        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "accounts"
-      SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: "kafka:9092"
     extends:
       file: common-config.yml
@@ -367,14 +364,15 @@ services:
   message:
     image: "trangbn/message:v14"
     container_name: message-ms
-    depends_on:
-      rabbit:
-        condition: service_healthy
     environment:
-      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: "kafka:9092"
     extends:
       file: common-config.yml
       service: network-deploy-service
+
+volumes:
+  kafka_data:
+    driver: local
 
 networks:
   ezmicroservice:
