@@ -15,8 +15,8 @@ spec:
         app: configserver
     spec:
       containers:
-        - name: configserver
-          image: trangbn/configserver:v15
+        - name: configserver4
+          image: trangbn/configserver:v14
           ports:
           - containerPort: 8071
 
