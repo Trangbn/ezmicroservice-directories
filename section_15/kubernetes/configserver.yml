@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: configserver4
-          image: trangbn/configserver:v14
+          image: trangbn/configserver:v12
           ports:
           - containerPort: 8071
 

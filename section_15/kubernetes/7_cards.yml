@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cards-deployment
+  labels:
+    app: cards
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cards
+  template:
+    metadata:
+      labels:
+        app: cards
+    spec:
+      containers:
+        - name: cards
+          image: trangbn/cards:v12
+          ports:
+            - containerPort: 9000
+          env:
+            - name: SPRING_APPLICATION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: ezmicroservice-configmap
+                  key: CARDS_APPLICATION_NAME
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: ezmicroservice-configmap
+                  key: SPRING_PROFILES_ACTIVE
+            - name: SPRING_CONFIG_IMPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: ezmicroservice-configmap
+                  key: SPRING_CONFIG_IMPORT
+            - name:
