@@ -18,7 +18,7 @@ spec:
         - name: cards
           image: trangbn/cards:v12
           ports:
-            - containerPort: 9000
+            - containerPort: 9080
           env:
             - name: SPRING_APPLICATION_NAME
               valueFrom:
@@ -35,4 +35,22 @@ spec:
                 configMapKeyRef:
                   name: ezmicroservice-configmap
                   key: SPRING_CONFIG_IMPORT
-            - name:
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: ezmicroservice-configmap
+                  key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+---
+appVersion: v1
+kind: Service
+metadata:
+  name: cards
+spec:
+  selector:
+    app: cards
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 9080
+      targetPort: 9080
+
